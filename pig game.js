@@ -1,19 +1,75 @@
-let scores, dice, roundScore, activePlayer;
-
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
+let scores, dice = 0,
+    totalScore, roundScore, diceDom, activePlayer, gamePlay;
 
 
+initialise();
+if (gamePlay) {
+    document.querySelector('.btn-roll').addEventListener('click', diceRoll);
 
-document.querySelector('.btn-roll').addEventListener('click', diceRoll);
+    function diceRoll() {
 
-function diceRoll() {
-    dice = Math.floor((Math.random() * 6) + 1);
-    let diceDom = document.querySelector('.dice');
-    diceDom.style.display = 'block';
-    diceDom.src = 'dice-' + dice + '.png';
-    console.log(dice);
+        dice = Math.floor((Math.random() * 6) + 1);
+        diceDom = document.querySelector('.dice');
+        diceDom.style.display = 'block';
+        diceDom.src = 'dice-' + dice + '.png';
+
+        if (dice !== 1) {
+
+            roundScore += dice;
+            document.querySelector('#current-' + activePlayer).textContent = roundScore;
+        } else {
+            alert('Ooooops!!! You rolled a ONE! It\'s the next player\s turn.');
+            nextPlayer();
+        }
+
+        console.log(dice);
+    }
 }
 
-//document.querySelector('#current-' + activePlayer).textContent = dice;
+function nextPlayer() {
+
+    roundScore = 0;
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+    document.getElementById('current-0').textContent = '0'
+    document.getElementById('current-1').textContent = '0'
+    diceDom.style.display = 'block';
+
+}
+
+
+function initialise() {
+    scores = [0, 0];
+    roundScore = 0;
+    activePlayer = 0;
+    gamePlay = true;
+
+    playerOne = document.getElementById('name-0').textContent = prompt('PLAYER ONE, Enter your name');
+    playerTwo = document.getElementById('name-1').textContent = prompt('PLAYER TWO, Enter your name');
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+    document.querySelector('#score-0').textContent = '0';
+    document.querySelector('#score-1').textContent = '0';
+}
+
+//HOLD SECTION
+
+document.querySelector('.btn-hold').addEventListener('click', saveScore);
+
+function saveScore() {
+    //console.log(roundScore);
+    scores[activePlayer] += roundScore;
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+    nextPlayer();
+
+
+}
+
+document.querySelector('.btn-new').addEventListener('click', newGame);
+
+function newGame() {
+    alert('GAME RESTARTED');
+    gamePlay = false;
+    initialise();
+}
