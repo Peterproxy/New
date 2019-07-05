@@ -16,4 +16,4 @@ function diceRoll() {
     console.log(dice);
 }
 
-document.querySelector('#current-' + activePlayer).textContent = dice;
+//document.querySelector('#current-' + activePlayer).textContent = dice;
