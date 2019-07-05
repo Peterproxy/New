@@ -34,7 +34,7 @@ function nextPlayer() {
     document.querySelector('.player-1-panel').classList.toggle('active');
     document.getElementById('current-0').textContent = '0'
     document.getElementById('current-1').textContent = '0'
-    diceDom.style.display = 'block';
+        //diceDom.style.display = 'block';
 
 }
 
@@ -45,6 +45,7 @@ function initialise() {
     activePlayer = 0;
     gamePlay = true;
 
+    document.querySelector('.dice').style.display = 'none';
     playerOne = document.getElementById('name-0').textContent = prompt('PLAYER ONE, Enter your name');
     playerTwo = document.getElementById('name-1').textContent = prompt('PLAYER TWO, Enter your name');
     document.getElementById('current-0').textContent = '0';
@@ -66,10 +67,21 @@ function saveScore() {
 
 }
 
-document.querySelector('.btn-new').addEventListener('click', newGame);
+document.querySelector('.btn-new').addEventListener('click', win);
 
 function newGame() {
     alert('GAME RESTARTED');
     gamePlay = false;
     initialise();
+}
+console.log(document.getElementById('name-0').textContent);
+
+/* if (scores[activePlayer] >= 100)
+{
+    
+} */
+function win() {
+    document.querySelector('.player-0-panel').classList.replace('active', 'winner');
+    document.querySelector('.player-1-panel').classList.replace('active', 'winner');
+
 }
